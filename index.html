@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light only">
+<meta name="theme-color" content="#ffffff">
 <title>Access · Dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
@@ -31,6 +33,7 @@
     --shadow-card:0 2px 15px 8px rgba(0,0,0,.03), 0 6px 16px rgba(0,0,0,.04);
   }
   *{box-sizing:border-box;}
+  html{color-scheme:light only;background:#fff;}
   body{
     margin:0;
     font-family:'Roboto',sans-serif;
@@ -38,7 +41,9 @@
     color:var(--text-primary);
     font-size:14px;
     line-height:1.5;
+    min-height:100vh;
   }
+  input,select,textarea,button{color-scheme:light only;}
   a{color:inherit;text-decoration:none;}
   button{font-family:inherit;cursor:pointer;}
 
@@ -57,7 +62,13 @@
   }
   .topbar-right{display:flex;align-items:center;gap:16px;color:var(--text-secondary);font-size:13px;}
   .avatar{width:32px;height:32px;border-radius:50%;background:var(--pink);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;}
-  .icon-btn{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:transparent;border:none;color:var(--text-secondary);}
+  .icon-btn{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:transparent;border:none;color:var(--text-secondary);cursor:pointer;}
+  .hamburger-btn{
+    display:none;width:36px;height:36px;border-radius:8px;border:none;background:transparent;
+    align-items:center;justify-content:center;color:var(--text-primary);cursor:pointer;flex-shrink:0;
+  }
+  .hamburger-btn:hover{background:var(--bg);}
+  .topbar-left{display:flex;align-items:center;}
 
   .app-body{display:flex;min-height:calc(100vh - 60px);}
 
@@ -300,19 +311,29 @@
 
   /* ===== Responsivo (mobile) ===== */
   @media (max-width:760px){
-    .topbar{padding:0 14px;}
-    .topbar svg[width="110"]{width:80px;height:auto;}
-    .topbar-right{gap:8px;font-size:11.5px;}
+    .topbar{padding:0 12px;gap:8px;}
+    .topbar svg[width="110"]{width:74px;height:auto;}
+    .topbar-left{display:flex;align-items:center;gap:8px;}
+    .topbar-right{gap:6px;font-size:11.5px;}
     .topbar-right span{display:none;}
+    .hamburger-btn{display:flex;}
 
     .app-body{flex-direction:column;}
     .sidebar-nav{
-      width:100%;display:flex;flex-wrap:wrap;align-items:center;gap:4px;
-      padding:10px 14px;border-right:none;border-bottom:1px solid var(--border);
+      position:fixed;top:60px;left:0;bottom:0;width:260px;max-width:80vw;z-index:90;
+      background:#fff;box-shadow:4px 0 18px rgba(0,0,0,.12);
+      transform:translateX(-100%);transition:transform .25s ease;
+      display:flex;flex-direction:column;align-items:stretch;gap:2px;
+      padding:16px 14px;border-right:none;overflow-y:auto;
     }
-    .nav-item{margin-bottom:0;padding:8px 10px;font-size:13px;}
-    .nav-item.active::after{display:none;}
-    .nav-group-label{width:100%;margin:6px 0 0;}
+    .sidebar-nav.open{transform:translateX(0);}
+    .sidebar-backdrop{
+      position:fixed;top:60px;left:0;right:0;bottom:0;background:rgba(0,0,0,.42);
+      z-index:80;opacity:0;visibility:hidden;transition:opacity .2s ease;
+    }
+    .sidebar-backdrop.show{opacity:1;visibility:visible;}
+    .nav-item{margin-bottom:0;padding:10px 12px;font-size:14px;}
+    .nav-group-label{width:100%;margin:14px 0 4px;}
 
     .content{padding:16px;}
     .page-header{flex-direction:column;align-items:stretch;}
@@ -600,6 +621,8 @@
   <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
   <symbol id="i-alert-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></symbol>
   <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h16"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
   <symbol id="i-arrow-up-down" viewBox="0 0 24 24"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></symbol>
   <symbol id="i-file" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></symbol>
@@ -607,16 +630,22 @@
 
 <!-- ============ TOPBAR ============ -->
 <div class="topbar">
-  <svg width="110" height="52" viewBox="0 0 126 60" xmlns="http://www.w3.org/2000/svg">
+  <div class="topbar-left">
+    <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleSidebar()" title="Menu"><svg class="icon" style="width:22px;height:22px;"><use href="#i-menu"/></svg></button>
+    <svg width="110" height="52" viewBox="0 0 126 60" xmlns="http://www.w3.org/2000/svg">
     <path d="M1 33.0003V23.0003C1 22.2046 1.3163 21.4408 1.87891 20.8782C2.44148 20.3158 3.20451 20.0003 4 20.0003H11L11.1025 20.0052C11.6067 20.0565 12 20.4826 12 21.0003C11.9999 21.5178 11.6065 21.9431 11.1025 21.9944L11 22.0003H4C3.73478 22.0003 3.48051 22.1057 3.29297 22.2933C3.10552 22.4808 3 22.7351 3 23.0003V33.0003C3.00008 33.2654 3.1055 33.5199 3.29297 33.7073C3.48049 33.8948 3.73485 34.0003 4 34.0003H20C20.2651 34.0003 20.5195 33.8948 20.707 33.7073C20.8945 33.5199 20.9999 33.2654 21 33.0003V31.0003C21 30.448 21.4477 30.0003 22 30.0003C22.5523 30.0003 23 30.448 23 31.0003V33.0003C22.9999 33.7958 22.6836 34.5588 22.1211 35.1214C21.5585 35.6839 20.7956 36.0003 20 36.0003H13V38.0003H16L16.1025 38.0052C16.6067 38.0565 17 38.4826 17 39.0003C16.9999 39.5178 16.6065 39.9431 16.1025 39.9944L16 40.0003H8C7.44781 40.0003 7.00016 39.5524 7 39.0003C7 38.448 7.44772 38.0003 8 38.0003H11V36.0003H4C3.20442 36.0003 2.4415 35.6839 1.87891 35.1214C1.31637 34.5588 1.00008 33.7958 1 33.0003ZM20 24.0003C20 22.8957 19.1046 22.0003 18 22.0003C16.8954 22.0003 16 22.8957 16 24.0003C16.0002 25.1047 16.8955 26.0003 18 26.0003C19.1045 26.0003 19.9998 25.1047 20 24.0003ZM22 24.0003C22 24.1893 21.9853 24.3749 21.96 24.5569L22.0791 24.6067L22.1709 24.6507C22.6175 24.8909 22.8185 25.4358 22.6201 25.9144C22.4217 26.3926 21.8946 26.6354 21.4092 26.4895L21.3135 26.4544L21.1943 26.4046C20.9691 26.7034 20.7041 26.9703 20.4053 27.1956L20.4541 27.3138L19.5869 27.6712C19.5842 27.6723 19.5818 27.6739 19.5791 27.6751L20.4541 27.3138C20.6651 27.8242 20.4225 28.4094 19.9121 28.6204C19.4018 28.8313 18.8165 28.5887 18.6055 28.0784L19.5156 27.7015H19.5166L18.6055 28.0784L18.5566 27.9602C18.3747 27.9856 18.189 28.0003 18 28.0003C17.8101 28.0003 17.6233 27.9859 17.4404 27.9602L17.3926 28.0784L16.5195 27.7151C16.5092 27.711 16.4986 27.7076 16.4883 27.7034L17.3926 28.0784C17.1809 28.5884 16.596 28.83 16.0859 28.6185C15.5759 28.4068 15.3334 27.8219 15.5449 27.3118L16.4072 27.6692C16.403 27.6674 16.3988 27.6652 16.3945 27.6634L15.5449 27.3118L15.5928 27.1946C15.2947 26.9697 15.0295 26.7037 14.8047 26.4056L14.6875 26.4544L14.5908 26.4886C14.1054 26.634 13.5788 26.3907 13.3809 25.9124C13.1697 25.4021 13.4126 24.8169 13.9229 24.6058L14.0391 24.5569C14.0137 24.375 14 24.1892 14 24.0003C14 23.8105 14.0135 23.6235 14.0391 23.4407L13.9219 23.3929L13.8291 23.3489C13.383 23.1083 13.1834 22.5635 13.3818 22.0852C13.5805 21.6074 14.1066 21.3651 14.5918 21.511L14.6885 21.5452L14.8047 21.5931C15.0295 21.295 15.2947 21.0288 15.5928 20.804L15.5449 20.6868L15.5107 20.5901C15.3652 20.1048 15.6078 19.5784 16.0859 19.3802C16.5642 19.182 17.1082 19.3824 17.3486 19.8284L17.3926 19.9212L17.4414 20.0403C17.624 20.0148 17.8104 20.0003 18 20.0003C18.1893 20.0003 18.3753 20.0149 18.5576 20.0403L18.6074 19.9212C18.8189 19.411 19.4039 19.1687 19.9141 19.3802C20.4241 19.5917 20.6664 20.1767 20.4551 20.6868L20.4062 20.804C20.7046 21.029 20.9693 21.2957 21.1943 21.594L21.3135 21.5452L21.4092 21.511C21.8947 21.365 22.4218 21.6078 22.6201 22.0862C22.8183 22.5646 22.6173 23.1087 22.1709 23.3489L22.0791 23.3929L21.96 23.4417C21.9855 23.6242 22 23.8108 22 24.0003Z" fill="#EC008C"/>
     <path d="M34.02 31H32.12L38.36 16.84H39.94L45.96 31H44L42.56 27.52H35.48L34.02 31ZM36.14 25.96H41.92L39.12 19H39.08L36.14 25.96ZM51.882 21.4C53.242 21.4 54.522 21.86 55.462 22.88L54.222 23.98C53.562 23.18 52.802 22.84 51.862 22.84C49.922 22.84 48.702 24.22 48.702 26.32C48.702 28.28 50.002 29.8 51.862 29.8C52.882 29.8 53.662 29.44 54.242 28.64L55.402 29.74C54.502 30.78 53.222 31.24 51.862 31.24C48.982 31.24 47.022 29.22 47.022 26.32C47.022 23.46 49.002 21.4 51.882 21.4ZM61.5305 21.4C62.8905 21.4 64.1705 21.86 65.1105 22.88L63.8705 23.98C63.2105 23.18 62.4505 22.84 61.5105 22.84C59.5705 22.84 58.3505 24.22 58.3505 26.32C58.3505 28.28 59.6505 29.8 61.5105 29.8C62.5305 29.8 63.3105 29.44 63.8905 28.64L65.0505 29.74C64.1505 30.78 62.8705 31.24 61.5105 31.24C58.6305 31.24 56.6705 29.22 56.6705 26.32C56.6705 23.46 58.6505 21.4 61.5305 21.4ZM71.1189 21.4C73.5589 21.4 75.5589 22.94 75.5589 26.42V26.8H67.9989C68.1589 28.54 69.4389 29.8 71.0789 29.8C72.3789 29.8 73.2989 29.34 74.0389 28.38L75.2189 29.3C74.2389 30.58 72.9789 31.24 71.0789 31.24C68.1789 31.24 66.3189 29.12 66.3189 26.32C66.3189 23.44 68.3389 21.4 71.1189 21.4ZM73.8789 25.48C73.7989 23.86 72.7789 22.84 71.0389 22.84C69.4389 22.84 68.2389 23.78 67.9989 25.48H73.8789ZM80.8322 21.4C82.2722 21.4 83.4322 22 84.0122 23.1L82.7122 23.96C82.3122 23.3 81.6722 22.84 80.7322 22.84C79.6922 22.84 78.8922 23.36 78.8922 24.14C78.8922 24.76 79.6322 25.2 81.2322 25.5C83.4722 25.92 84.3122 26.78 84.3122 28.3C84.3122 30.14 82.8322 31.24 80.5722 31.24C78.8322 31.24 77.7522 30.7 76.9322 29.5L78.1722 28.54C78.9522 29.48 79.6322 29.8 80.5722 29.8C81.7522 29.8 82.6322 29.24 82.6322 28.36C82.6322 27.5 82.0522 27.16 79.9922 26.72C78.1322 26.32 77.3322 25.56 77.3322 24.16C77.3322 22.46 78.9122 21.4 80.8322 21.4ZM89.3478 21.4C90.7878 21.4 91.9478 22 92.5278 23.1L91.2278 23.96C90.8278 23.3 90.1878 22.84 89.2478 22.84C88.2078 22.84 87.4078 23.36 87.4078 24.14C87.4078 24.76 88.1478 25.2 89.7478 25.5C91.9878 25.92 92.8278 26.78 92.8278 28.3C92.8278 30.14 91.3478 31.24 89.0878 31.24C87.3478 31.24 86.2678 30.7 85.4478 29.5L86.6878 28.54C87.4678 29.48 88.1478 29.8 89.0878 29.8C90.2678 29.8 91.1478 29.24 91.1478 28.36C91.1478 27.5 90.5678 27.16 88.5078 26.72C86.6478 26.32 85.8478 25.56 85.8478 24.16C85.8478 22.46 87.4278 21.4 89.3478 21.4Z" fill="black" fill-opacity="0.85"/>
-  </svg>
+    </svg>
+  </div>
   <div class="topbar-right">
     <span>Ambiente de Staging</span>
+    <button class="icon-btn" title="Modo escuro (em breve)"><svg class="icon" style="width:18px;height:18px;"><use href="#i-moon"/></svg></button>
     <button class="icon-btn" title="Aplicativos"><svg class="icon" style="width:18px;height:18px;"><use href="#i-grid"/></svg></button>
     <div class="avatar">N</div>
   </div>
 </div>
+
+<div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleSidebar()"></div>
 
 <div class="app-body">
 
@@ -1796,6 +1825,16 @@
     document.querySelectorAll('.sidebar-nav .nav-item').forEach(n => n.classList.remove('active'));
     if(navEl) navEl.classList.add('active');
     window.scrollTo({top:0, behavior:'smooth'});
+    closeSidebarMobile();
+  }
+
+  function toggleSidebar(){
+    document.querySelector('.sidebar-nav').classList.toggle('open');
+    document.getElementById('sidebarBackdrop').classList.toggle('show');
+  }
+  function closeSidebarMobile(){
+    document.querySelector('.sidebar-nav').classList.remove('open');
+    document.getElementById('sidebarBackdrop').classList.remove('show');
   }
 
   function openDetalheExterno(trEl){
